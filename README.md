@@ -35,7 +35,7 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 # Import container images from a directory and url...
 ./k8s-image-importer \
     -d ./online-boutique \
-    -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
+    -u https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml \
     -r docker.io/gregnrobinson
 ```
 

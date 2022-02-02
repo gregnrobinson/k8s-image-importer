@@ -21,7 +21,7 @@ helpFunction()
    exit 1
 }
 
-while getopts "u:d:r:" opt
+while getopts "u:d:r:t:" opt
 do
    case "$opt" in
       u ) targetUrl="$OPTARG" ;;
@@ -35,7 +35,7 @@ done
 if [[ ! -z $targetUrl ]]
 then
   wget -q $targetUrl -O manifest.yaml
-  grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
+  grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" > base_urls
   cat base_urls | while read line
   do
       name=$(echo $line | cut -f3-4 -d"/")
@@ -50,7 +50,7 @@ fi
 if [[ ! -z $targetDir ]]
 then
   pushd "$targetDir"
-  grep -r -n "image: " . | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
+  grep -r -n "image: " . | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" > base_urls
 
   cat base_urls | while read line
   do  
