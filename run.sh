@@ -11,6 +11,7 @@ registry_prefix="docker.io/gregnrobinson"
 target_dir="./online-boutique"
 target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
 
+function target-url(){
 if [[ ! -z $target_url ]]
 then
   wget -q $target_url -O manifest.yaml &&\
@@ -25,7 +26,9 @@ then
       docker push $registry_prefix/$name
   done
 fi
+}
 
+function target-dir(){
 if [[ ! -z $target_dir ]]
 then
   pushd "$target_dir"
@@ -41,3 +44,58 @@ then
   done
   popd
 fi
+}
+
+function display_help() {
+    SHORT_SHA="$(git rev-parse --short HEAD)"
+    BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    echo ""
+    echo "${cyan}k8s image importer${normal}"
+    echo ""
+    echo "Usage: run.sh [option...]" >&2
+    echo
+    echo "   ${bold}-d, --target-dir${normal}    Pull all images from all ${bold}yaml${normal} files within a directory. "
+    echo "   ${bold}-u, --target-url${normal}    Pull all images from a ${bold}yaml${normal} file using http/https. "
+    echo "   ${bold}-h, --help${normal}          Display argument options. "
+    echo
+    exit 1
+}
+
+while :
+do
+    case "$1" in
+      -h | --help)
+          display_help
+          exit 0
+          ;;
+      -d | --target-dir)
+          prune
+          shift 2
+          ;;
+      -u | --target-url)
+          delete
+          shift 2
+          ;;
+
+      --) # End of all options
+          shift
+          break
+          ;;
+      -*)
+          echo "Error: Unknown option: $1" >&2
+          ## or call function display_help
+          exit 1
+          ;;
+      *)  # No more options
+          break
+          ;;
+    esac
+done
+
+case "$1" in
+  *)
+     display_help
+
+     exit 1
+     ;;
+esac
