@@ -12,14 +12,13 @@ target_dir="./online-boutique"
 target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
 
 function target-url(){
-if [[ ! -z $target_url ]]
+if [[ ! -z $1 ]]
 then
-  wget -q $target_url -O manifest.yaml &&\
-  grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > target_url
-  cat target_url | while read line
+  wget -q $1 -O manifest.yaml
+  grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
+  cat base_urls | while read line
   do
       name=$(echo $line | cut -f3-4 -d"/")
-      
       echo "${normal}${cyan}Importing $line as ${bold}$registry_prefix/$name${normal}${bold}"
       docker pull $line
       docker tag $line $registry_prefix/$name
@@ -29,12 +28,12 @@ fi
 }
 
 function target-dir(){
-if [[ ! -z $target_dir ]]
+if [[ ! -z $1 ]]
 then
-  pushd "$target_dir"
-  grep -n "image: " *.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > target_dir
+  pushd "$1"
+  grep -n "image: " *.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
 
-  cat target_dir | while read line
+  cat base_urls | while read line
   do  
       name=$(echo $line | cut -f4-4 -d"/")
       echo "${normal}${cyan}Importing $line as ${bold}$registry_prefix/$name${normal}${bold}"
@@ -54,8 +53,8 @@ function display_help() {
     echo ""
     echo "Usage: run.sh [option...]" >&2
     echo
-    echo "   ${bold}-d, --target-dir${normal}    Pull all images from all ${bold}yaml${normal} files within a directory. "
-    echo "   ${bold}-u, --target-url${normal}    Pull all images from a ${bold}yaml${normal} file using http/https. "
+    echo "   ${bold}-d, --target-dir${normal}    Import all container images within a directory.  "
+    echo "   ${bold}-u, --target-url${normal}    Import all container images using an http/https address. "
     echo "   ${bold}-h, --help${normal}          Display argument options. "
     echo
     exit 1
@@ -69,11 +68,11 @@ do
           exit 0
           ;;
       -d | --target-dir)
-          prune
+          target-dir
           shift 2
           ;;
       -u | --target-url)
-          delete
+          target-url
           shift 2
           ;;
 
