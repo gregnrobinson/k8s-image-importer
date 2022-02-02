@@ -25,7 +25,3 @@ export target_url="https://github.com/jetstack/cert-manager/releases/download/v1
 ## Example Output
 
 [![asciicast](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97.svg)](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97)
-
-[See it in action](https://storage.googleapis.com/phronesis-310405.appspot.com/k8s-image-importer/image-import-test.mp4)
-
-![Screen Shot 2022-02-01 at 10 03 35 PM](https://user-images.githubusercontent.com/26353407/152087972-f5a84036-891e-4250-9f8e-f1a36fbb826a.png)
