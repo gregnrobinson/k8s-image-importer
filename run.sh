@@ -7,7 +7,6 @@ export green=$(tput setaf 2)
 export bold=$(tput bold)
 export normal=$(tput sgr0)
 
-
 registry_prefix="docker.io/gregnrobinson"
 target_dir=""
 target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
@@ -25,8 +24,6 @@ then
       docker tag $line $registry_prefix/$name
       docker push $registry_prefix/$name
   done
-else
-  echo "nothing to do..."
 fi
 
 if [[ ! -z $target_dir ]]
@@ -43,6 +40,4 @@ then
       docker push $registry_prefix/$name
   done
   popd
-else
-  echo "nothing to do..."
 fi
