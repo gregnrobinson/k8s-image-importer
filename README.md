@@ -25,5 +25,3 @@ export target_url="https://github.com/jetstack/cert-manager/releases/download/v1
 ## Example Output
 
 [![asciicast](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97.svg)](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97)
-
-<script id="asciicast-466017" src="https://asciinema.org/a/466017.js" async></script>
