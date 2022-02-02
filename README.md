@@ -22,6 +22,6 @@ export target_url="https://github.com/jetstack/cert-manager/releases/download/v1
 ./run.sh
 ```
 
-## Example Output
+## Example Usage
 
 [![asciicast](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97.svg)](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97)
