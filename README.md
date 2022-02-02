@@ -21,7 +21,7 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 
 ## Examples
 
-```bash
+```sh
 # Import images from a manifest URL...
 ./k8s-image-importer \
     -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
