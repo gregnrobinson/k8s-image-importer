@@ -39,6 +39,6 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
     -r docker.io/gregnrobinson
 ```
 
-[![asciicast](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97.svg)](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97)
+[![asciicast](https://asciinema.org/a/466220.svg)](https://asciinema.org/a/466220)
 
 *[Alternative](https://storage.googleapis.com/phronesis-310405.appspot.com/k8s-image-importer/image-import-test.mp4)*
