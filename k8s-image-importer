@@ -54,15 +54,15 @@ then
   cat base_urls | while read line
   do  
       slash_count=$(awk -F"/" '{print NF-1}' <<< "$line")
-      if [[ $slash_count -lt 2  ]]; 
-      then
+      
+      if [[ $slash_count -lt 2  ]]; then
          name=$(echo $line | cut -f2 -d"/")
-      elif [[ $slash_count -eq 3  ]];
-      then
+      elif [[ $slash_count -eq 3  ]]; then
          name=$(echo $line | cut -f4-4 -d"/")
       else
          name=$(echo $line | cut -f3-4 -d"/")
       fi
+
       echo "${normal}${cyan}Importing $line ►►► ${bold}$registryPrefix/$name${normal}${bold}"
       docker pull $line
       docker tag $line $registryPrefix/$name
