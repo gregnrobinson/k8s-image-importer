@@ -7,10 +7,6 @@ export green=$(tput setaf 2)
 export bold=$(tput bold)
 export normal=$(tput sgr0)
 
-#registryPrefix="docker.io/gregnrobinson"
-#target_dir="./online-boutique"
-#target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
-
 helpFunction()
 {
    echo ""
@@ -22,7 +18,7 @@ helpFunction()
    echo -r "${bold}The target container registry (required)."
    echo -h "${bold}Display the help menu."
    echo ""
-   exit 1 # Exit script after printing help
+   exit 1
 }
 
 while getopts "u:d:r:" opt
