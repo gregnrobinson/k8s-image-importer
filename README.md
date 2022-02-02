@@ -13,7 +13,7 @@ Test the functionality by copying and importing a 1:1 copy from the online bouti
 export registry_prefix="docker.io/gregnrobinson"
 
 # If set, all yaml files within the target diretory are scanned, and any images found are imported into your container registry...registry...
-export target_dir="/Users/gregrobinson/repos/a-eks-anthos-demo/config-management/online-boutique"
+export target_dir="./online-boutique"
 
 # If set, the target manifest is downloaded and images are extracted and imported into your container registry...
 export target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
