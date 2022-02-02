@@ -1,5 +1,6 @@
 # k8s-image-importer
-This project scans all yaml files in a target directory and extracts image registry urls a list. The script then pulls the image, tags it, and pushes it to a public or private registry using a registry prefix. This script assumes you are already authenticated to your container registry.
+
+This project scans all yaml files in a target directory and extracts all images from the files as a list. The script than pulls the image, tags it, and pushes it to a public or private registry using a registry prefix. This script assumes you are already authenticated to your container registry.
 
 ## Usage
 
@@ -8,11 +9,15 @@ Set the following variables. `target_dir` refers to the folder containing the Ku
 Test the functionality by copying and importing a 1:1 copy from the online boutique application images into your own repository. The only requirement is making sure the script is pointed at the correct folder.
 
 ```bash
+# Set the target registry prefix. This usually consists of the regsitry domain followed by your username...
 export registry_prefix="docker.io/gregnrobinson"
-export target_dir="./online-boutique"
 
+# If set, all yaml files within the target diretory are scanned, and any images found are imported into your container registry...registry...
+export target_dir="/Users/gregrobinson/repos/a-eks-anthos-demo/config-management/online-boutique"
+
+# If set, the target manifest is downloaded and images are extracted and imported into your container registry...
+export target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
+
+# Execute the import script...
 ./run.sh
 ```
-## Example Output
-
-![Screen Shot 2022-02-01 at 9 17 33 PM](https://user-images.githubusercontent.com/26353407/152083123-1f011108-4b99-4f2a-9b82-777ecd90f026.png)
