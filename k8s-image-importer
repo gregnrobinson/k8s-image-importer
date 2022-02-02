@@ -39,7 +39,7 @@ then
   cat base_urls | while read line
   do
       name=$(echo $line | cut -f3-4 -d"/")
-      echo "${normal}${cyan}Importing $line as ${bold}$registryPrefix/$name${normal}${bold}"
+      echo "${normal}${cyan}Importing $line ►► ${bold}$registryPrefix/$name${normal}${bold}"
       docker pull $line
       docker tag $line $registryPrefix/$name
       docker push $registryPrefix/$name
@@ -55,7 +55,7 @@ then
   cat base_urls | while read line
   do  
       name=$(echo $line | cut -f4-4 -d"/")
-      echo "${normal}${cyan}Importing $line as ${bold}$registryPrefix/$name${normal}${bold}"
+      echo "${normal}${cyan}Importing $line ►► ${bold}$registryPrefix/$name${normal}${bold}"
       docker pull $line
       docker tag $line $registryPrefix/$name
       docker push $registryPrefix/$name
