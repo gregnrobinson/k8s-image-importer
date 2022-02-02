@@ -1,0 +1,18 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: hipster-demo
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/microservices-demo
+    directory: /release
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/microservices-demo
+    directory: /release
+    ref: main
+    commit: e1c04f89be61b9af59f6a277539757675b1a60df
