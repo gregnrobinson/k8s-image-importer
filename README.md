@@ -21,3 +21,7 @@ export target_url="https://github.com/jetstack/cert-manager/releases/download/v1
 # Execute the import script...
 ./run.sh
 ```
+
+## Expected Behaviour
+
+[See it in action](https://storage.googleapis.com/phronesis-310405.appspot.com/k8s-image-importer/image-import-test.mp4)
