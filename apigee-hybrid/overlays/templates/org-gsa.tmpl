@@ -1,0 +1,14 @@
+apiVersion: apigee.cloud.google.com/v1alpha2
+kind: ApigeeOrganization
+metadata:
+  name: org
+spec:
+  components:
+    connectAgent:
+      appServiceAccountSecretName: apigee-connect-agent-${ORG}-svc-account
+    watcher:
+      appServiceAccountSecretName: apigee-watcher-${ORG}-svc-account
+    mart:
+      appServiceAccountSecretName: apigee-mart-${ORG}-svc-account
+    udca:
+      appServiceAccountSecretName: apigee-udca-${ORG}-svc-account

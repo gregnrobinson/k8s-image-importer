@@ -1,0 +1,12 @@
+apiVersion: apigee.cloud.google.com/v1alpha2
+kind: ApigeeEnvironment
+metadata:
+  name: env
+spec:
+  components:
+    synchronizer:
+      appServiceAccountSecretName: apigee-synchronizer-${ENV}-svc-account
+    udca:
+      appServiceAccountSecretName: apigee-udca-${ENV}-svc-account
+    runtime:
+      appServiceAccountSecretName: apigee-runtime-${ENV}-svc-account
