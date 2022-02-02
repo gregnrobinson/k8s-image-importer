@@ -51,10 +51,15 @@ if [[ ! -z $targetDir ]]
 then
   pushd "$targetDir"
   grep -r -n "image: " . | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" > base_urls
-
   cat base_urls | while read line
   do  
-      name=$(echo $line | cut -f4-4 -d"/")
+      slash_count=$(awk -F"/" '{print NF-1}' <<< "$line")
+      if [[ $slash_count -lt 2  ]];
+      then
+         name=$(echo $line | cut -f2 -d"/")
+      else
+         name=$(echo $line | cut -f3-3 -d"/")
+      fi
       echo "${normal}${cyan}Importing $line ►►► ${bold}$registryPrefix/$name${normal}${bold}"
       docker pull $line
       docker tag $line $registryPrefix/$name
@@ -62,3 +67,5 @@ then
   done
   popd
 fi
+
+
