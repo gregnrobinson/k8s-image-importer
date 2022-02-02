@@ -1,5 +1,5 @@
 # k8s-image-importer
-This project scans all yaml files in a target directory and extracts all images from the files as a list. The script than pulls the image, tags it, and pushes it to a public or private registry using a registry prefix. This script assumes you are already authenticated to your container registry.
+This project scans all yaml files in a target directory and extracts image registry urls a list. The script then pulls the image, tags it, and pushes it to a public or private registry using a registry prefix. This script assumes you are already authenticated to your container registry.
 
 ## Usage
 
@@ -13,3 +13,6 @@ export target_dir="./online-boutique"
 
 ./run.sh
 ```
+## Example Output
+
+![Screen Shot 2022-02-01 at 9 17 33 PM](https://user-images.githubusercontent.com/26353407/152083123-1f011108-4b99-4f2a-9b82-777ecd90f026.png)
