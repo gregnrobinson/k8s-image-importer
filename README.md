@@ -1,5 +1,8 @@
 # k8s-image-importer
 
+- [Usage](#usage)
+- [Examples](#examples)
+
 This project scans all yaml files in a target directory and extracts all images from the files as a list. The script than pulls the image, tags it, and pushes it to a public or private registry using a registry prefix. This script assumes you are already authenticated to your container registry.
 
 ## Usage
@@ -9,20 +12,32 @@ Set the following variables. `target_dir` refers to the folder containing the Ku
 Test the functionality by copying and importing a 1:1 copy from the online boutique application images into your own repository. The only requirement is making sure the script is pointed at the correct folder.
 
 ```bash
-# Set the target registry prefix. This usually consists of the regsitry domain followed by your username...
-export registry_prefix="docker.io/gregnrobinson"
+Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 
-# If set, all yaml files within the target diretory are scanned, and any images found are imported into your container registry...
-export target_dir="./online-boutique"
-
-# If set, the target manifest is downloaded and images are extracted and imported into your container registry...
-export target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
-
-# Execute the import script...
-./run.sh
+-d Import all container images within a directory.  
+-u Import all container images using an http/https address. 
+-r The container registry where the images will be sent.
 ```
 
-## Example Usage
+## Examples
+
+```bash
+# Import images from a manifest URL...
+./k8s-image-importer \
+    -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
+    -r docker.io/gregnrobinson
+
+# Import container images from all yaml files within a directory...
+./k8s-image-importer \
+    -d ./online-boutique \
+    -r docker.io/gregnrobinson
+
+# Import container images from a directory and url...
+./k8s-image-importer \
+    -d ./online-boutique \
+    -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
+    -r docker.io/gregnrobinson
+```
 
 [![asciicast](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97.svg)](https://asciinema.org/a/bOTXF9xFiSKW1VdyHlWVSea97)
 

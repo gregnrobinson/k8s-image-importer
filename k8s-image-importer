@@ -1,0 +1,68 @@
+#!/bin/bash
+set -o errexit
+set -o pipefail
+
+export cyan=$(tput setaf 6)
+export green=$(tput setaf 2)
+export bold=$(tput bold)
+export normal=$(tput sgr0)
+
+#registryPrefix="docker.io/gregnrobinson"
+#target_dir="./online-boutique"
+#target_url="https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml"
+
+helpFunction()
+{
+   echo ""
+   echo ""
+   echo "Usage: $0 -u targetUrl -d targetDir -r registryPrefix"
+   echo ""
+   echo -d "${bold}Import all container images within a directory."
+   echo -u "${bold}Import all container images using an http/https address."
+   echo -r "${bold}The target container registry (required)."
+   echo -h "${bold}Display the help menu."
+   echo ""
+   exit 1 # Exit script after printing help
+}
+
+while getopts "u:d:r:" opt
+do
+   case "$opt" in
+      u ) targetUrl="$OPTARG" ;;
+      d ) targetDir="$OPTARG" ;;
+      r ) registryPrefix="$OPTARG" ;;
+      h ) helpFunction ;;
+      ? ) helpFunction ;;
+   esac
+done
+
+if [[ ! -z $targetUrl ]]
+then
+  wget -q $targetUrl -O manifest.yaml
+  grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
+  cat base_urls | while read line
+  do
+      name=$(echo $line | cut -f3-4 -d"/")
+      echo "${normal}${cyan}Importing $line as ${bold}$registryPrefix/$name${normal}${bold}"
+      docker pull $line
+      docker tag $line $registryPrefix/$name
+      docker push $registryPrefix/$name
+  done
+fi
+
+
+if [[ ! -z $targetDir ]]
+then
+  pushd "$targetDir"
+  grep -n "image: " *.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' > base_urls
+
+  cat base_urls | while read line
+  do  
+      name=$(echo $line | cut -f4-4 -d"/")
+      echo "${normal}${cyan}Importing $line as ${bold}$registryPrefix/$name${normal}${bold}"
+      docker pull $line
+      docker tag $line $registryPrefix/$name
+      docker push $registryPrefix/$name
+  done
+  popd
+fi
