@@ -40,5 +40,3 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 ```
 
 [![asciicast](https://asciinema.org/a/466220.svg)](https://asciinema.org/a/466220)
-
-*[Alternative](https://storage.googleapis.com/phronesis-310405.appspot.com/k8s-image-importer/image-import-test.mp4)*
