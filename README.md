@@ -24,7 +24,7 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 ```sh
 # Import apigee-hybrid and cert-manager images...
 ./k8s-image-importer \
-    -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
+    -d ./apigee-hybrid \
     -r docker.io/gregnrobinson
 
 # Import istio images...
