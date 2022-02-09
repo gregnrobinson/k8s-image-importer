@@ -1,3 +1,0 @@
-docker.io/gregnrobinson/cert-manager-cainjector:v1.7.1
-docker.io/gregnrobinson/cert-manager-controller:v1.7.1
-docker.io/gregnrobinson/cert-manager-webhook:v1.7.1
