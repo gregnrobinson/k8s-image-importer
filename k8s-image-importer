@@ -1,7 +1,6 @@
 #!/bin/bash
 set -o errexit
 set -o pipefail
-set -x
 
 export cyan=$(tput setaf 6)
 export green=$(tput setaf 2)
@@ -51,7 +50,7 @@ fi
 if [[ "$targetDir" == *"apigee-hybrid"* ]];
 then
   pushd "./apigee-hybrid"
-  grep -r -n "image: " . | grep -v "{{" | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" > base_apigee_urls
+  grep -r -n "image: " . | grep -v "{{" | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" | sort -u > base_apigee_urls
   cat base_apigee_urls | while read line
   do  
       slash_count=$(awk -F"/" '{print NF-1}' <<< "$line")
