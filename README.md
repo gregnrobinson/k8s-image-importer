@@ -22,20 +22,14 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 ## Examples
 
 ```sh
-# Import images from a manifest URL...
+# Import apigee-hybrid and cert-manager images...
 ./k8s-image-importer \
     -u https://github.com/jetstack/cert-manager/releases/download/v1.7.0/cert-manager.yaml \
     -r docker.io/gregnrobinson
 
-# Import container images from all yaml files within a directory...
+# Import istio images...
 ./k8s-image-importer \
-    -d ./online-boutique \
-    -r docker.io/gregnrobinson
-
-# Import container images from a directory and url...
-./k8s-image-importer \
-    -d ./online-boutique \
-    -u https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml \
+    -d ./istio-1.9.8-asm.6 \
     -r docker.io/gregnrobinson
 ```
 
