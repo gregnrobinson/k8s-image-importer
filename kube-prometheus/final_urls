@@ -1,0 +1,5 @@
+docker.io/gregnrobinson/grafana:8.3.4
+docker.io/gregnrobinson/configmap-reload:v0.5.0
+docker.io/gregnrobinson/kube-state-metrics:v2.3.0
+docker.io/gregnrobinson/prometheus-adapter:v0.9.1
+docker.io/gregnrobinson/kube-rbac-proxy:v0.11.0

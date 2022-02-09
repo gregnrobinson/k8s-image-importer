@@ -1,1 +1,13 @@
 docker.io/gregnrobinson/busybox:latest
+docker.io/gregnrobinson/adservice:v0.3.5
+docker.io/gregnrobinson/cartservice:v0.3.5
+docker.io/gregnrobinson/checkoutservice:v0.3.5
+docker.io/gregnrobinson/currencyservice:v0.3.5
+docker.io/gregnrobinson/emailservice:v0.3.5
+docker.io/gregnrobinson/frontend:v0.3.5
+docker.io/gregnrobinson/loadgenerator:v0.3.5
+docker.io/gregnrobinson/paymentservice:v0.3.5
+docker.io/gregnrobinson/productcatalogservice:v0.3.5
+docker.io/gregnrobinson/recommendationservice:v0.3.5
+docker.io/gregnrobinson/shippingservice:v0.3.5
+docker.io/gregnrobinson/redis:alpine
