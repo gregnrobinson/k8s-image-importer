@@ -1,0 +1,534 @@
+#
+# Kubernetes (k8s) namespace where Apigee components will be installed.
+#
+namespace: apigee
+
+# b/145029762 Deprecate this and use k8sCluster object as we need capture region for Apigee Connect Agent
+k8sClusterName:
+
+k8sCluster:
+  name:
+  region:
+
+#
+# The closet GCP region of the k8s cluster
+#
+# NOTE: StackDriver (SD) does not provide logging regionalization yet: go/logging-regionalization
+# but the region is still required as it is one of the mandatory labels that the logs are tagged
+# with when pushed to SD.
+#
+# Currently, projectID and projectIDRuntime are being used by the apigee-logger and the apigee-metrics
+# to push their data in the below specific GCP project with the cluster name and the GCP region. The
+# projectIDRuntime property is optional. If not used, it is assumed that projectID value is
+# used for both the Apigee organization's GCP project and the runtime K8S cluster's project.
+#
+gcp:
+  region: us-central1
+  projectID:
+  projectIDRuntime:
+  workloadIdentityEnabled: false
+
+# For backward compatibility (intermediate release)
+# TODO(b/150480983) Deprecate: Remove support for this style config after 1.2 release.
+gcpRegion: us-central1
+gcpProjectID:
+gcpProjectIDRuntime:
+
+#
+# k8s secret name to use for pulling the docker images.
+#
+imagePullSecrets:
+- name:
+
+revision: "162"
+
+nodeSelector:
+  requiredForScheduling: false
+  apigeeRuntime:
+    key: "cloud.google.com/gke-nodepool"
+    value: "apigee-runtime"
+  apigeeData:
+    key: "cloud.google.com/gke-nodepool"
+    value: "apigee-data"
+
+#
+# Enables strict validation of service account permissions. This uses Cloud Resource Manager API
+# method "testIamPermissions" to verify that the provided service account has the required
+# permissions. In the case of service accounts for an Apigee Org, the project ID check is the one
+# mapped to the Organization. For Metrics and Logger, the project checked is based on the
+# "gcp.projectID" overrides.yaml configuration.
+validateServiceAccounts: true
+
+#
+# Apigee org and envs related details.
+#
+org:
+contractProvider: https://apigee.googleapis.com
+envs:
+  - name:
+    pollInterval:
+    serviceType:
+    port:
+    sslCertPath:
+    sslKeyPath:
+    sslSecret:
+    hostAlias:
+
+#
+# Authz sidecar used by various components for Auth Token.
+#
+authz:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-authn-authz"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 25m
+      memory: 128Mi
+  livenessProbe:
+    timeoutSeconds: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 0
+  readinessProbe:
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 0
+
+#
+# Apigee MART.
+#
+mart:
+  replicaCountMin: 1
+  replicaCountMax: 5
+  targetCPUUtilizationPercentage: 75
+  terminationGracePeriodSeconds: 30
+  sslCertPath:
+  sslKeyPath:
+  sslSecret:
+  hostAlias:
+  nodeSelector:
+    key:
+    value:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-mart-server"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  initCheckCF:
+    resources:
+      requests:
+        cpu: 10m
+  livenessProbe:
+    timeoutSeconds: 1
+    failureThreshold: 12
+    periodSeconds: 5
+    initialDelaySeconds: 30
+  readinessProbe:
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 15
+  metricsURL: "/v1/server/metrics"
+  ingress:
+    ConnectTimeout: 20
+#
+# Apigee Sychronizer.
+#
+synchronizer:
+  serviceAccountPath:
+  serviceAccountSecret:
+  pollInterval: 60
+  terminationGracePeriodSeconds: 30
+  replicaCountMin: 1
+  replicaCountMax: 4
+  targetCPUUtilizationPercentage: 75
+  nodeSelector:
+    key:
+    value:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-synchronizer"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  livenessProbe:
+    timeoutSeconds: 1
+    failureThreshold: 12
+    periodSeconds: 5
+    initialDelaySeconds: 15
+  readinessProbe:
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 0
+
+#
+# Apigee Runtime.
+#
+runtime:
+  cwcAppend:
+    "conf_metrics_server.metrics.latency.histogram.buckets.milliseconds": "BUCKETS,1D,2D,5D,10D,25D,50D,75D,100D,250D,500D,750D,1000D,2500D,5000D,7500D,10000D"
+  replicaCountMin: 1
+  replicaCountMax: 4
+  targetCPUUtilizationPercentage: 75
+  terminationGracePeriodSeconds: 180
+  service:
+    type: ClusterIP
+  nodeSelector:
+    key:
+    value:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-runtime"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  livenessProbe:
+    timeoutSeconds: 5
+    failureThreshold: 12
+    periodSeconds: 5
+    initialDelaySeconds: 15
+  readinessProbe:
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 15
+
+#
+# Apigee Cassandra.
+#
+cassandra:
+  sslRootCAPath:
+  sslCertPath:
+  sslKeyPath:
+  auth:
+    default:
+      password: "iloveapis123"
+    admin:
+      password: "iloveapis123"
+    ddl:
+      password: "iloveapis123"
+    dml:
+      password: "iloveapis123"
+    jmx:
+      username: "jmxuser"
+      password: "iloveapis123"
+    jolokia:
+      username: "jolokiauser"
+      password: "iloveapis123"
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-hybrid-cassandra-client"
+      tag: "1.6.2"
+      pullPolicy: IfNotPresent
+  replicaCount: 1
+  terminationGracePeriodSeconds: 300
+  multiRegionSeedHost:
+  port: 9042
+  nodeSelector:
+    key:
+    value:
+  storage:
+    storageclass:
+    capacity: 10Gi
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-hybrid-cassandra"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  maxHeapSize: 512M
+  heapNewSize: 100M
+  clusterName: "apigeecluster"
+  datacenter: "dc-1"
+  rack: "ra-1"
+  readinessProbe:
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 10
+    initialDelaySeconds: 0
+  backup:
+    enabled: false
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
+      tag: "1.6.2"
+      pullPolicy: IfNotPresent
+    serviceAccountPath:
+    schedule: "0 2 * * *"
+    dbStorageBucket:
+    cloudProvider: "GCP"
+  restore:
+    enabled: false
+    snapshotTimestamp:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
+      tag: "1.6.2"
+      pullPolicy: IfNotPresent
+    serviceAccountPath:
+    dbStorageBucket:
+    cloudProvider: "GCP"
+  hostNetwork:
+  dnsPolicy:
+
+#
+# Apigee UDCA.
+#
+udca:
+  envVars:
+    "NOOP_MODE": "false"
+  dataDir:
+    base: "/opt/apigee/data"
+    apiDataSubDir: "api"
+    traceDataSubDir: "trace"
+    eventDataSubDir: "event"
+  pollingIntervalInSec: 1
+  replicaCountMin: 1
+  replicaCountMax: 4
+  targetCPUUtilizationPercentage: 75
+  terminationGracePeriodSeconds: 600
+  nodeSelector:
+    key:
+    value:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-udca"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  livenessProbe:
+    timeoutSeconds: 1
+    failureThreshold: 2
+    periodSeconds: 5
+    initialDelaySeconds: 0
+  fluentd:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
+      tag: "1.8.9"
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        memory: 500Mi
+      requests:
+        cpu: 500m
+        memory: 250Mi
+
+#
+# Apigee Logger.
+#
+logger:
+  enabled: false
+  terminationGracePeriodSeconds: 30
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
+    tag: "1.8.9"
+    pullPolicy: IfNotPresent
+  serviceAccountPath:
+  livenessProbe:
+    failureThreshold: 3
+    initialDelaySeconds: 0
+    periodSeconds: 60
+    successThreshold: 1
+    timeoutSeconds: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 250Mi
+  fluentd:
+    buffer_chunk_limit: 512k
+    buffer_queue_limit: 6
+    flush_interval: 5s
+    max_retry_wait: 30
+    num_threads: 2
+  nodeSelector:
+    key: "apigee.cloud.google.com/apigee-logger-enabled"
+    value: "true"
+  proxyURL:
+
+#
+# Apigee Metrics.
+#
+metrics:
+  enabled: true
+  terminationGracePeriodSeconds: 300
+  serviceAccountPath:
+  stackdriverExporter:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 128m
+        memory: 512Mi
+  prometheus:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-prom-prometheus"
+      tag: "v2.25.0"
+      pullPolicy: IfNotPresent
+    args:
+      storage_tsdb_retention: 48h
+    containerPort: 9090
+    readinessProbe:
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 120
+    livenessProbe:
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 6
+  sdSidecar:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-prometheus-sidecar"
+      tag: "0.9.0"
+      pullPolicy: IfNotPresent
+    containerPort: 9091
+    stackdriverApiAddress: "https://monitoring.googleapis.com:443/"
+  proxyURL:
+
+# Apigee Connect Agent
+connectAgent:
+  server: "apigeeconnect.googleapis.com:443"
+  logLevel: "ERROR"
+  logVerbosity: "0"
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-connect-agent"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  replicaCountMin: 1
+  replicaCountMax: 1
+  targetCPUUtilizationPercentage: 75
+  terminationGracePeriodSeconds: 600
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+
+# Apigee Watcher
+watcher:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-watcher"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  replicaCountMin: 1
+  replicaCountMax: 1
+  targetCPUUtilizationPercentage: 75
+  terminationGracePeriodSeconds: 600
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+
+# Apigee Redis
+redis:
+  auth:
+    password: "iloveapis123"
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-redis"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  terminationGracePeriodSeconds: 600
+  resources:
+    requests:
+      cpu: 500m
+  readinessProbe:
+    periodSeconds: 5
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 12
+  livenessProbe:
+    periodSeconds: 5
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 6
+  envoy:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-envoy"
+      tag: "v1.19.1"
+      pullPolicy: IfNotPresent
+    replicaCountMin: 1
+    replicaCountMax: 1
+    targetCPUUtilizationPercentage: 75
+    terminationGracePeriodSeconds: 600
+    resources:
+      requests:
+        cpu: "500m"
+    readinessProbe:
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 12
+    livenessProbe:
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 6
+
+# Apigee Operators controller
+ao:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-operators"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+  args:
+    loglevel: info
+    enableWebhooks: true
+    enableControllers: true
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  installer:
+    image:
+      url: "gcr.io/apigee-release/hybrid/apigee-installer"
+      tag: "1.6.2"
+      pullPolicy: IfNotPresent
+
+# kube rbac proxy
+kubeRBACProxy:
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-kube-rbac-proxy"
+    tag: "v0.8.0"
+    pullPolicy: IfNotPresent
+
+# diagnostic collector
+diagnostic:
+  cwcAppend:
+    "conf_com.apigee.diagnostics.jumper.image": "gcr.io/apigee-release/hybrid/apigee-diagnostics-runner:1.6.2"
+  image:
+    url: "gcr.io/apigee-release/hybrid/apigee-diagnostics-collector"
+    tag: "1.6.2"
+    pullPolicy: IfNotPresent
+
+# These are the defaults encryption keys
+defaults:
+  org:
+    kmsEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nw=="
+    kvmEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nw=="
+    contractEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM="
+    axHashSalt: "iloveapis123"
+  env:
+    kmsEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nw=="
+    kvmEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nw=="
+    cacheEncryptionKey: "aWxvdmVhcGlzMTIzNDU2Nw=="
