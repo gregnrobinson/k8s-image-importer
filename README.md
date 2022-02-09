@@ -27,9 +27,14 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
     -d ./apigee-hybrid \
     -r docker.io/gregnrobinson
 
-# Import istio images...
+# Import istio images 1.9.8...
 ./k8s-image-importer \
     -d ./istio-1.9.8-asm.6 \
+    -r docker.io/gregnrobinson
+
+# Import istio images 1.12.0...
+./k8s-image-importer \
+    -d ./istio-1.12.0-asm.0 \
     -r docker.io/gregnrobinson
 
 # Import online boutique images...
