@@ -82,7 +82,7 @@ then
   echo "${bold}New images...${green}${normal}${green}"
   echo ""
   popd > /dev/null
-  (cd ./apigee-hybrid && cat final_urls | sort -u)
+  (cd $targetDir && cat final_urls | sort -u)
 fi
 
 if [[ "$targetDir" == *"kube-prometheus"* ]];
