@@ -32,7 +32,7 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
     -d ./istio-1.9.8-asm.6 \
     -r docker.io/gregnrobinson
     
-$ Import from URL...
+# Import from URL...
 ./k8s-image-importer \
     -u https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml \
     -r docker.io/gregnrobinson
