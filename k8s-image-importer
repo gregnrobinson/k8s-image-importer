@@ -117,5 +117,5 @@ then
   done
   echo "${normal}${green}"
   popd > /dev/null
-  (cd ./apigee-hybrid && cat final_istio_urls | sort -u)
+  (cd ./istio-1.9.8-asm.6 && cat final_istio_urls | sort -u)
 fi

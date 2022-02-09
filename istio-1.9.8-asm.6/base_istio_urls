@@ -13,3 +13,13 @@ gcr.io/istio-testing/pilot:latest
 istio/install-cni:1.11.6
 istio/pilot
 istio/proxyv2
+gcr.io/istio-testing/operator:1.9-dev
+gcr.io/istio-testing/pilot:latest
+istio/install-cni:1.11.6
+istio/pilot
+istio/proxyv2
+gcr.io/istio-testing/operator:1.9-dev
+gcr.io/istio-testing/pilot:latest
+istio/install-cni:1.11.6
+istio/pilot
+istio/proxyv2
