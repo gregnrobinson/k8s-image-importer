@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: samples
+upstream:
+  type: git
+  git:
+    commit: 4352c6a59f4cc154d5312cc505a257ff5da5bc5d
+    repo: https://github.com/GoogleCloudPlatform/anthos-service-mesh-packages
+    directory: /samples
+    ref: main
