@@ -69,7 +69,9 @@ then
       docker tag $line $registryPrefix/$name
       docker push $registryPrefix/$name
   done
-  echo "${normal}${green}"
+  echo "" 
+  echo "${bold}New images...${green}${normal}${green}"
+  echo ""
   popd > /dev/null
   (cd ./apigee-hybrid && cat final_apigee_urls | sort -u)
 fi
@@ -91,6 +93,7 @@ then
       slash_count=$(awk -F"/" '{print NF-1}' <<< "$line")
       if [[ "$line" == *"install-cni"* ]];
       then
+         echo "${normal}${cyan}Importing istio/$line:1.11.6 ►►► ${bold}$registryPrefix/$line:1.11.6${normal}${bold}"
          docker pull istio/$line:1.11.6
          echo istio/$line:1.11.6 >> base_istio_urls
          docker tag istio/$line:1.11.6 $registryPrefix/$line:1.11.6
@@ -99,6 +102,7 @@ then
       elif [[ $slash_count -eq 0  ]]; 
       then
          name=$(echo $line)
+         echo "${normal}${cyan}Importing $line ►►► ${bold}$registryPrefix/$name${normal}${bold}"
          docker pull istio/$name
          echo istio/$name >> base_istio_urls
          docker tag istio/$name $registryPrefix/$name
@@ -107,15 +111,17 @@ then
       elif [[ $slash_count -eq 2  ]]; 
       then
          name=$(echo $line | cut -f1-4 -d"/")
+         echo "${normal}${cyan}Importing $line ►►► ${bold}$registryPrefix/$(echo $name | cut -f3-4 -d"/")${normal}${bold}"
          docker pull $name
          echo $name >> base_istio_urls
          docker tag $name $registryPrefix/$(echo $name | cut -f3-4 -d"/")
          docker push $registryPrefix/$(echo $name | cut -f3-4 -d"/")
          echo $registryPrefix/$(echo $name | cut -f3-4 -d"/") >> final_istio_urls
       fi
-      echo "${normal}${cyan}Importing $line ►►► ${bold}$registryPrefix/$name${normal}${bold}"
   done
-  echo "${normal}${green}"
+  echo "" 
+  echo "${bold}New images...${green}${normal}${green}"
+  echo ""
   popd > /dev/null
   (cd ./istio-1.9.8-asm.6 && cat final_istio_urls | sort -u)
 fi
