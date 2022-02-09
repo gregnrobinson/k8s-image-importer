@@ -79,7 +79,7 @@ envs:
 #
 authz:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-authn-authz"
+    url: "ecr.io/apigee-release/hybrid/apigee-authn-authz"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -114,7 +114,7 @@ mart:
     key:
     value:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-mart-server"
+    url: "ecr.io/apigee-release/hybrid/apigee-mart-server"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -154,7 +154,7 @@ synchronizer:
     key:
     value:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-synchronizer"
+    url: "ecr.io/apigee-release/hybrid/apigee-synchronizer"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -189,7 +189,7 @@ runtime:
     key:
     value:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-runtime"
+    url: "ecr.io/apigee-release/hybrid/apigee-runtime"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -231,7 +231,7 @@ cassandra:
       username: "jolokiauser"
       password: "iloveapis123"
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-hybrid-cassandra-client"
+      url: "ecr.io/apigee-release/hybrid/apigee-hybrid-cassandra-client"
       tag: "1.6.2"
       pullPolicy: IfNotPresent
   replicaCount: 1
@@ -245,7 +245,7 @@ cassandra:
     storageclass:
     capacity: 10Gi
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-hybrid-cassandra"
+    url: "ecr.io/apigee-release/hybrid/apigee-hybrid-cassandra"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -266,7 +266,7 @@ cassandra:
   backup:
     enabled: false
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
+      url: "ecr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
       tag: "1.6.2"
       pullPolicy: IfNotPresent
     serviceAccountPath:
@@ -277,7 +277,7 @@ cassandra:
     enabled: false
     snapshotTimestamp:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
+      url: "ecr.io/apigee-release/hybrid/apigee-cassandra-backup-utility"
       tag: "1.6.2"
       pullPolicy: IfNotPresent
     serviceAccountPath:
@@ -306,7 +306,7 @@ udca:
     key:
     value:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-udca"
+    url: "ecr.io/apigee-release/hybrid/apigee-udca"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   resources:
@@ -320,7 +320,7 @@ udca:
     initialDelaySeconds: 0
   fluentd:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
+      url: "ecr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
       tag: "1.8.9"
       pullPolicy: IfNotPresent
     resources:
@@ -337,7 +337,7 @@ logger:
   enabled: false
   terminationGracePeriodSeconds: 30
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
+    url: "ecr.io/apigee-release/hybrid/apigee-stackdriver-logging-agent"
     tag: "1.8.9"
     pullPolicy: IfNotPresent
   serviceAccountPath:
@@ -382,7 +382,7 @@ metrics:
         memory: 512Mi
   prometheus:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-prom-prometheus"
+      url: "ecr.io/apigee-release/hybrid/apigee-prom-prometheus"
       tag: "v2.25.0"
       pullPolicy: IfNotPresent
     args:
@@ -398,7 +398,7 @@ metrics:
       failureThreshold: 6
   sdSidecar:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-stackdriver-prometheus-sidecar"
+      url: "ecr.io/apigee-release/hybrid/apigee-stackdriver-prometheus-sidecar"
       tag: "0.9.0"
       pullPolicy: IfNotPresent
     containerPort: 9091
@@ -411,7 +411,7 @@ connectAgent:
   logLevel: "ERROR"
   logVerbosity: "0"
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-connect-agent"
+    url: "ecr.io/apigee-release/hybrid/apigee-connect-agent"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   replicaCountMin: 1
@@ -426,7 +426,7 @@ connectAgent:
 # Apigee Watcher
 watcher:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-watcher"
+    url: "ecr.io/apigee-release/hybrid/apigee-watcher"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   replicaCountMin: 1
@@ -443,7 +443,7 @@ redis:
   auth:
     password: "iloveapis123"
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-redis"
+    url: "ecr.io/apigee-release/hybrid/apigee-redis"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   replicaCount: 2
@@ -463,7 +463,7 @@ redis:
     failureThreshold: 6
   envoy:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-envoy"
+      url: "ecr.io/apigee-release/hybrid/apigee-envoy"
       tag: "v1.19.1"
       pullPolicy: IfNotPresent
     replicaCountMin: 1
@@ -485,7 +485,7 @@ redis:
 # Apigee Operators controller
 ao:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-operators"
+    url: "ecr.io/apigee-release/hybrid/apigee-operators"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
   args:
@@ -501,23 +501,23 @@ ao:
       memory: 512Mi
   installer:
     image:
-      url: "gcr.io/apigee-release/hybrid/apigee-installer"
+      url: "ecr.io/apigee-release/hybrid/apigee-installer"
       tag: "1.6.2"
       pullPolicy: IfNotPresent
 
 # kube rbac proxy
 kubeRBACProxy:
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-kube-rbac-proxy"
+    url: "ecr.io/apigee-release/hybrid/apigee-kube-rbac-proxy"
     tag: "v0.8.0"
     pullPolicy: IfNotPresent
 
 # diagnostic collector
 diagnostic:
   cwcAppend:
-    "conf_com.apigee.diagnostics.jumper.image": "gcr.io/apigee-release/hybrid/apigee-diagnostics-runner:1.6.2"
+    "conf_com.apigee.diagnostics.jumper.image": "ecr.io/apigee-release/hybrid/apigee-diagnostics-runner:1.6.2"
   image:
-    url: "gcr.io/apigee-release/hybrid/apigee-diagnostics-collector"
+    url: "ecr.io/apigee-release/hybrid/apigee-diagnostics-collector"
     tag: "1.6.2"
     pullPolicy: IfNotPresent
 

@@ -1,0 +1,5 @@
+gcr.io/istio-testing/operator:1.9-dev
+gcr.io/istio-testing/pilot:latest
+install-cni
+pilot
+proxyv2
