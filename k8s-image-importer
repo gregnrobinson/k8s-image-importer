@@ -21,6 +21,8 @@ helpFunction()
    exit 1
 }
 
+
+
 while getopts "u:d:r:t:" opt
 do
    case "$opt" in
@@ -31,6 +33,13 @@ do
       ? ) helpFunction ;;
    esac
 done
+
+if [[ ! -z $targetDir ]]
+then
+  pushd "$targetDir"
+  sed -i -e "s/gcr.io/ecr.io/g" values.yaml
+  popd
+fi
 
 if [[ ! -z $targetUrl ]]
 then
@@ -45,7 +54,6 @@ then
       docker push $registryPrefix/$name
   done
 fi
-
 
 if [[ ! -z $targetDir ]]
 then
