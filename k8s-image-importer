@@ -34,7 +34,9 @@ done
 
 if [[ ! -z $targetUrl ]]
 then
-  wget -q $targetUrl -O manifest.yaml
+  pushd ./urls > /dev/null
+  rm -rf *
+  wget -q $targetUrl -O ./manifest.yaml
   grep -n "image: " manifest.yaml | awk -F  ": " '{print $3}' | sed -e 's/^"//' -e 's/"$//' | cut -f1 -d"#" | cut -f1 -d"@" | sort -u > base_urls
   cat base_urls | while read line
   do
@@ -45,6 +47,11 @@ then
       docker tag $line $registryPrefix/$name
       docker push $registryPrefix/$name
   done
+  echo "" 
+  echo "${bold}New images...${green}${normal}${green}"
+  echo ""
+  popd > /dev/null
+  (cd ./urls && cat final_urls | sort -u)
 fi
 
 if [[ "$targetDir" == *"online-boutique"* ]];
