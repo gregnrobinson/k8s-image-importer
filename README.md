@@ -31,7 +31,17 @@ Usage: ./k8s-image-importer -u targetUrl -d targetDir -r registryPrefix
 ./k8s-image-importer \
     -d ./istio-1.9.8-asm.6 \
     -r docker.io/gregnrobinson
-    
+
+# Import online boutique images...
+./k8s-image-importer \
+    -d ./online-boutique \
+    -r docker.io/gregnrobinson
+
+# Import prometheus stack images...
+./k8s-image-importer \
+    -d ./kube-prometheus \
+    -r docker.io/gregnrobinson
+
 # Import from URL...
 ./k8s-image-importer \
     -u https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml \
